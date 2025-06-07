@@ -1,79 +1,67 @@
 # LegalTech CV Creator
 
-A modern web application for creating professional CVs with a focus on legal technology experience and skills.
+A modern, minimalist CV creator specifically designed for legal technology professionals. Built with React, TypeScript, and Tailwind CSS.
 
 ## Features
 
-- Modern, responsive design
-- Multiple themes (Modern, Infographic, Legal)
-- PDF export functionality
-- Real-time preview
-- JSON-based data management
-- Innovation highlighting
-- GitHub backup integration
+- **Modern Design**: Clean, professional layout optimized for both digital and print formats
+- **LegalTech Focus**: Specialized sections for legal technology projects and achievements
+- **Theme Options**: Choose between Modern, Infographic, and Traditional styles
+- **Innovation Highlighting**: Toggle to emphasize tech-focused achievements and projects
+- **Live Preview**: Real-time updates as you edit your CV
+- **PDF Export**: Generate professional PDFs ready for submission
+- **JSON Editor**: Direct data editing for complete control over your CV content
 
 ## Getting Started
 
-### Prerequisites
-
-- Node.js (v14 or higher)
-- npm or yarn
-
-### Installation
-
 1. Clone the repository:
-```bash
-git clone [your-repository-url]
-cd CVcreatorV2
-```
+   ```bash
+   git clone https://github.com/Cake2222/CVCreator.git
+   cd CVCreator
+   ```
 
 2. Install dependencies:
-```bash
-npm install
-```
+   ```bash
+   npm install
+   ```
 
-3. Create a `.env` file in the root directory and add your GitHub token:
-```
-VITE_GITHUB_TOKEN=your_github_token_here
-```
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-4. Start the development server:
-```bash
-npm run dev
-```
+4. Open [http://localhost:5173](http://localhost:5173) in your browser
 
-## Usage
+## CV Structure
 
-1. Open the application in your browser
-2. Use the JSON editor to input your CV data
-3. Choose your preferred theme
-4. Toggle innovation highlighting as needed
-5. Download your CV as a PDF
-6. Use the GitHub backup feature to save your CV data
+The CV is organized into the following sections:
 
-## Technologies Used
+1. **Executive Summary** – Brief, impactful introduction
+2. **Experience** – Timeline-based layout with innovation highlights
+3. **Legal Tech Projects** – Project-based achievements with metrics
+4. **Key Achievements** – Notable accomplishments and milestones
+5. **Key Skills** – Technology and legal expertise
 
-- React
-- TypeScript
-- Tailwind CSS
-- @react-pdf/renderer
-- Vite
+## Development
+
+- Built with React + TypeScript
+- Styled with Tailwind CSS
+- PDF generation using @react-pdf/renderer
+- State management with React hooks
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Project Structure
+## Acknowledgments
 
-- `src/components/` - Reusable CV section components
-- `src/pages/` - Page components
-- `src/App.tsx` - Main application component
-- `src/index.css` - Global styles and Tailwind imports
-
-## Design Principles
-
-- Minimalist and professional aesthetic
-- Mobile-first responsive design
-- Clear visual hierarchy
-- Optimized for PDF export
-- Semantic HTML structure 
+- Built with [Cursor AI](https://cursor.sh)
+- Inspired by modern legal technology professionals 

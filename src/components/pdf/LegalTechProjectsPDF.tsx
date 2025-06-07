@@ -23,14 +23,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderBottomWidth: 1,
     borderBottomColor: '#e2e8f0',
-    minHeight: 32,
+    minHeight: 28,
   },
   tableHeader: {
     backgroundColor: '#f8fafc',
     fontWeight: 'bold',
   },
   tableCell: {
-    padding: 6,
+    padding: 4,
     fontSize: 9,
     flex: 1,
     borderRightWidth: 1,
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     flex: 2,
   },
   roleCell: {
-    flex: 1,
+    flex: 0.8,
   },
   achievementsCell: {
     flex: 3,
@@ -49,24 +49,26 @@ const styles = StyleSheet.create({
   projectTitle: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 2,
+    marginBottom: 1,
   },
   projectName: {
-    fontSize: 10,
+    fontSize: 9,
     fontWeight: 'bold',
+    flex: 1,
   },
   role: {
-    fontSize: 9,
+    fontSize: 8,
   },
   achievement: {
-    fontSize: 9,
-    marginBottom: 2,
-    lineHeight: 1.3,
+    fontSize: 8,
+    marginBottom: 1,
+    lineHeight: 1.2,
   },
   innovationIcon: {
-    width: 10,
-    height: 10,
-    marginRight: 4,
+    width: 8,
+    height: 8,
+    marginRight: 3,
+    flexShrink: 0,
   },
   modern: {
     heading: {
@@ -80,34 +82,34 @@ const styles = StyleSheet.create({
       color: '#2d3748',
     },
     tableCell: {
-      color: '#4a5568',
+      color: '#2d3748',
     },
     highlight: {
-      backgroundColor: '#ebf8ff',
+      backgroundColor: '#f8fafc',
     },
     innovationIcon: {
-      color: '#2b6cb0',
+      color: '#2d3748',
     },
   },
   infographic: {
     heading: {
-      color: '#1e3a8a',
+      color: '#1a202c',
     },
     table: {
-      borderColor: '#c7d2fe',
+      borderColor: '#e2e8f0',
     },
     tableHeader: {
-      backgroundColor: '#e0e7ff',
-      color: '#312e81',
+      backgroundColor: '#f8fafc',
+      color: '#2d3748',
     },
     tableCell: {
-      color: '#4338ca',
+      color: '#2d3748',
     },
     highlight: {
-      backgroundColor: '#e0e7ff',
+      backgroundColor: '#f8fafc',
     },
     innovationIcon: {
-      color: '#4338ca',
+      color: '#2d3748',
     },
   },
   legal: {
@@ -122,13 +124,13 @@ const styles = StyleSheet.create({
       color: '#2d3748',
     },
     tableCell: {
-      color: '#4a5568',
+      color: '#2d3748',
     },
     highlight: {
       backgroundColor: '#f7fafc',
     },
     innovationIcon: {
-      color: '#4a5568',
+      color: '#2d3748',
     },
   },
 });
@@ -180,15 +182,15 @@ export const LegalTechProjectsPDF: React.FC<LegalTechProjectsPDFProps> = ({
             <View style={[styles.tableCell, styles.projectCell]}>
               <View style={styles.projectTitle}>
                 {highlightInnovation && <InnovationIcon />}
-                <Text style={styles.projectName}>{project.name}</Text>
+                <Text style={[styles.projectName, themeStyles.tableCell]}>{project.name}</Text>
               </View>
             </View>
-            <Text style={[styles.tableCell, styles.roleCell, styles.role]}>
+            <Text style={[styles.tableCell, styles.roleCell, styles.role, themeStyles.tableCell]}>
               {project.role}
             </Text>
             <View style={[styles.tableCell, styles.achievementsCell]}>
               {project.achievements.map((achievement, aIndex) => (
-                <Text key={aIndex} style={styles.achievement}>
+                <Text key={aIndex} style={[styles.achievement, themeStyles.tableCell]}>
                   • {achievement}
                 </Text>
               ))}

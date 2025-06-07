@@ -1,18 +1,14 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Theme } from './ThemeSelector';
-import { ThemeSelector } from './ThemeSelector';
-import { InnovationToggle } from './InnovationToggle';
+import { ThemeSelector, Theme } from './ThemeSelector';
 import { PDFDownloadButton } from './PDFDownloadButton';
+import { CVData } from '../types/cv';
 
 interface TopBarProps {
   currentTheme: Theme;
   onThemeChange: (theme: Theme) => void;
   highlightInnovation: boolean;
   onInnovationToggle: () => void;
-  cvData: any;
-  onReset: () => void;
-  onGitHubBackup: () => void;
+  cvData: CVData;
 }
 
 export const TopBar: React.FC<TopBarProps> = ({
@@ -20,47 +16,32 @@ export const TopBar: React.FC<TopBarProps> = ({
   onThemeChange,
   highlightInnovation,
   onInnovationToggle,
-  cvData,
-  onReset,
-  onGitHubBackup,
+  cvData
 }) => {
   return (
-    <motion.div
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-sm border-b border-gray-200
-                 px-4 py-3 flex items-center justify-between shadow-sm"
-    >
-      <div className="flex items-center space-x-4">
-        <h1 className="text-xl font-semibold text-gray-900">LegalTech CV Creator</h1>
-        <ThemeSelector currentTheme={currentTheme} onThemeChange={onThemeChange} />
+    <div className="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex justify-between items-center">
+          <h1 className="text-2xl font-bold text-gray-800">LegalTech CV Creator</h1>
+          <div className="flex items-center space-x-4">
+            <label className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                checked={highlightInnovation}
+                onChange={onInnovationToggle}
+                className="form-checkbox h-4 w-4 text-blue-600"
+              />
+              <span className="text-sm text-gray-700">Highlight Innovation</span>
+            </label>
+            <ThemeSelector currentTheme={currentTheme} onThemeChange={onThemeChange} />
+            <PDFDownloadButton
+              data={cvData}
+              theme={currentTheme}
+              highlightInnovation={highlightInnovation}
+            />
+          </div>
+        </div>
       </div>
-
-      <div className="flex items-center space-x-4">
-        <InnovationToggle
-          isEnabled={highlightInnovation}
-          onToggle={onInnovationToggle}
-        />
-        <PDFDownloadButton
-          data={cvData}
-          theme={currentTheme}
-          highlightInnovation={highlightInnovation}
-        />
-        <button
-          onClick={onReset}
-          className="px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg
-                     hover:bg-gray-200 transition-colors duration-200"
-        >
-          Reset CV
-        </button>
-        <button
-          onClick={onGitHubBackup}
-          className="px-3 py-1.5 text-sm font-medium text-white bg-gray-800 rounded-lg
-                     hover:bg-gray-900 transition-colors duration-200"
-        >
-          Backup to GitHub
-        </button>
-      </div>
-    </motion.div>
+    </div>
   );
 }; 

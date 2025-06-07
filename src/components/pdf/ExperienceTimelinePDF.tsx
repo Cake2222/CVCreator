@@ -15,7 +15,16 @@ const styles = StyleSheet.create({
   experience: {
     marginBottom: 8,
     paddingLeft: 8,
-    borderLeftWidth: 1,
+    borderLeftWidth: 2,
+    position: 'relative',
+  },
+  timelineDot: {
+    position: 'absolute',
+    left: -5,
+    top: 0,
+    width: 8,
+    height: 8,
+    borderRadius: 4,
   },
   dateRange: {
     fontSize: 9,
@@ -56,7 +65,10 @@ const styles = StyleSheet.create({
       color: '#1a202c',
     },
     experience: {
-      borderLeftColor: '#e2e8f0',
+      borderLeftColor: '#90cdf4',
+    },
+    timelineDot: {
+      backgroundColor: '#90cdf4',
     },
     dateRange: {
       color: '#718096',
@@ -89,7 +101,10 @@ const styles = StyleSheet.create({
       color: '#1e3a8a',
     },
     experience: {
-      borderLeftColor: '#c7d2fe',
+      borderLeftColor: '#818cf8',
+    },
+    timelineDot: {
+      backgroundColor: '#818cf8',
     },
     dateRange: {
       color: '#6366f1',
@@ -122,7 +137,10 @@ const styles = StyleSheet.create({
       color: '#1a202c',
     },
     experience: {
-      borderLeftColor: '#e2e8f0',
+      borderLeftColor: '#cbd5e0',
+    },
+    timelineDot: {
+      backgroundColor: '#cbd5e0',
     },
     dateRange: {
       color: '#718096',
@@ -185,9 +203,9 @@ export const ExperienceTimelinePDF: React.FC<ExperienceTimelinePDFProps> = ({
           style={[
             styles.experience,
             themeStyles.experience,
-            highlightInnovation ? themeStyles.highlight : {},
           ]}
         >
+          <View style={[styles.timelineDot, themeStyles.timelineDot]} />
           <Text style={[styles.dateRange, themeStyles.dateRange]}>
             {exp.period}
           </Text>
@@ -214,7 +232,6 @@ export const ExperienceTimelinePDF: React.FC<ExperienceTimelinePDFProps> = ({
                 style={[
                   styles.achievement,
                   themeStyles.achievement,
-                  highlightInnovation ? themeStyles.highlightText : {},
                 ]}
               >
                 • {achievement}

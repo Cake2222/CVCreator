@@ -2,7 +2,7 @@ import { CVData } from '../types/cv';
 
 export const initialCVData: CVData = {
   name: "Stefan Hart",
-  title: "Legal Technology Analyst with a passion for automation",
+  title: "Legal Technology Analyst with a passion for automation and innovation",
   contact: {
     email: "stefanhart101@gmail.com",
     phone: "+44 (0)7518210049",

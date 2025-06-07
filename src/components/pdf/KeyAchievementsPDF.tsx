@@ -12,92 +12,101 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 8,
   },
-  achievement: {
-    marginBottom: 8,
-    paddingLeft: 8,
-    borderLeftWidth: 1,
+  table: {
+    display: 'flex',
+    width: 'auto',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
   },
-  achievementHeader: {
+  tableRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 4,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e2e8f0',
+    minHeight: 28,
   },
-  achievementTitle: {
-    fontSize: 12,
+  tableHeader: {
+    backgroundColor: '#f8fafc',
     fontWeight: 'bold',
   },
-  date: {
+  tableCell: {
+    padding: 4,
     fontSize: 9,
-    marginTop: 1,
+    flex: 1,
+    borderRightWidth: 1,
+    borderRightColor: '#e2e8f0',
+  },
+  achievementCell: {
+    flex: 2,
+  },
+  dateCell: {
+    flex: 0.8,
+  },
+  descriptionCell: {
+    flex: 3,
+    borderRightWidth: 0,
+  },
+  achievementTitle: {
+    fontSize: 9,
+    fontWeight: 'bold',
+    marginBottom: 1,
+  },
+  date: {
+    fontSize: 8,
   },
   description: {
-    fontSize: 9,
-    marginBottom: 2,
-    lineHeight: 1.3,
+    fontSize: 8,
+    marginBottom: 1,
+    lineHeight: 1.2,
   },
   impact: {
-    fontSize: 9,
-    marginTop: 2,
-    lineHeight: 1.3,
+    fontSize: 8,
+    marginTop: 1,
+    lineHeight: 1.2,
   },
   modern: {
     heading: {
       color: '#1a202c',
     },
-    achievement: {
-      borderLeftColor: '#e2e8f0',
+    table: {
+      borderColor: '#e2e8f0',
     },
-    achievementTitle: {
+    tableHeader: {
+      backgroundColor: '#f8fafc',
       color: '#2d3748',
     },
-    date: {
-      color: '#718096',
-    },
-    description: {
-      color: '#4a5568',
-    },
-    impact: {
-      color: '#4a5568',
+    tableCell: {
+      color: '#2d3748',
     },
   },
   infographic: {
     heading: {
-      color: '#1e3a8a',
+      color: '#1a202c',
     },
-    achievement: {
-      borderLeftColor: '#c7d2fe',
+    table: {
+      borderColor: '#e2e8f0',
     },
-    achievementTitle: {
-      color: '#312e81',
+    tableHeader: {
+      backgroundColor: '#f8fafc',
+      color: '#2d3748',
     },
-    date: {
-      color: '#4338ca',
-    },
-    description: {
-      color: '#4338ca',
-    },
-    impact: {
-      color: '#4338ca',
+    tableCell: {
+      color: '#2d3748',
     },
   },
   legal: {
     heading: {
       color: '#1a202c',
     },
-    achievement: {
-      borderLeftColor: '#e2e8f0',
+    table: {
+      borderColor: '#e2e8f0',
     },
-    achievementTitle: {
+    tableHeader: {
+      backgroundColor: '#f7fafc',
       color: '#2d3748',
     },
-    date: {
-      color: '#718096',
-    },
-    description: {
-      color: '#4a5568',
-    },
-    impact: {
-      color: '#4a5568',
+    tableCell: {
+      color: '#2d3748',
     },
   },
 });
@@ -116,29 +125,30 @@ export const KeyAchievementsPDF: React.FC<KeyAchievementsPDFProps> = ({
   return (
     <View style={styles.section}>
       <Text style={[styles.heading, themeStyles.heading]}>Key Achievements</Text>
-      {data.map((achievement, index) => (
-        <View
-          key={index}
-          style={[styles.achievement, themeStyles.achievement]}
-        >
-          <View style={styles.achievementHeader}>
-            <Text style={[styles.achievementTitle, themeStyles.achievementTitle]}>
-              {achievement.title}
-            </Text>
-            <Text style={[styles.date, themeStyles.date]}>
+      <View style={[styles.table, themeStyles.table]}>
+        {/* Table Header */}
+        <View style={[styles.tableRow, styles.tableHeader, themeStyles.tableHeader]}>
+          <Text style={[styles.tableCell, styles.achievementCell]}>Achievement</Text>
+          <Text style={[styles.tableCell, styles.dateCell]}>Date</Text>
+          <Text style={[styles.tableCell, styles.descriptionCell]}>Description & Impact</Text>
+        </View>
+
+        {/* Table Rows */}
+        {data.map((achievement, index) => (
+          <View key={index} style={styles.tableRow}>
+            <View style={[styles.tableCell, styles.achievementCell]}>
+              <Text style={styles.achievementTitle}>{achievement.title}</Text>
+            </View>
+            <Text style={[styles.tableCell, styles.dateCell, styles.date]}>
               {achievement.date}
             </Text>
+            <View style={[styles.tableCell, styles.descriptionCell]}>
+              <Text style={styles.description}>{achievement.description}</Text>
+              <Text style={styles.impact}>Impact: {achievement.impact}</Text>
+            </View>
           </View>
-          
-          <Text style={[styles.description, themeStyles.description]}>
-            {achievement.description}
-          </Text>
-          
-          <Text style={[styles.impact, themeStyles.impact]}>
-            Impact: {achievement.impact}
-          </Text>
-        </View>
-      ))}
+        ))}
+      </View>
     </View>
   );
 }; 
