@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { initialCVData } from '../store/cvData';
 import { Theme } from '../components/ThemeSelector';
 import { ExecutiveSummary } from '../components/ExecutiveSummary';
 import { KeySkills } from '../components/KeySkills';
@@ -10,9 +9,10 @@ import { JsonEditor } from '../components/JsonEditor';
 import { TopBar } from '../components/TopBar';
 import { getThemeStyles } from '../utils/themeStyles';
 import { CVData } from '../types/cv';
+import { personalCVData } from '../store/personalCVData';
 
 export const HomePage: React.FC = () => {
-  const [cvData, setCVData] = useState<CVData>(initialCVData);
+  const [cvData, setCVData] = useState<CVData>(personalCVData);
   const [theme, setTheme] = useState<Theme>('modern');
   const [highlightInnovation, setHighlightInnovation] = useState(false);
   const styles = getThemeStyles(theme);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AceEditor from 'react-ace';
 import { CVData } from '../types/cv';
 
@@ -10,52 +10,69 @@ import 'ace-builds/src-noconflict/theme-monokai';
 interface JsonEditorProps {
   data: CVData;
   onUpdate: (data: CVData) => void;
-  onReset: () => void;
 }
 
-export const JsonEditor: React.FC<JsonEditorProps> = ({ data, onUpdate, onReset }) => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const [jsonString, setJsonString] = useState(() => JSON.stringify(data, null, 2));
+export const JsonEditor: React.FC<JsonEditorProps> = ({ data, onUpdate }) => {
+  const [jsonString, setJsonString] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'success' | 'error'>('idle');
 
-  const handleChange = (value: string) => {
-    setJsonString(value);
+  useEffect(() => {
+    setJsonString(JSON.stringify(data, null, 2));
+  }, [data]);
+
+  const saveToFile = async (jsonData: string) => {
     try {
-      const parsedData = JSON.parse(value);
-      onUpdate(parsedData);
-    } catch (error) {
-      // Invalid JSON, don't update
+      setSaveStatus('saving');
+      const response = await fetch('http://localhost:3001/api/save-cv', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ cvData: JSON.parse(jsonData) }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to save changes');
+      }
+
+      setSaveStatus('success');
+      setTimeout(() => setSaveStatus('idle'), 2000);
+    } catch (err) {
+      console.error('Error saving CV data:', err);
+      setSaveStatus('error');
+      setTimeout(() => setSaveStatus('idle'), 2000);
     }
   };
 
-  const handleReset = () => {
-    const defaultData = JSON.stringify(data, null, 2);
-    setJsonString(defaultData);
-    onReset();
+  const handleChange = (newValue: string) => {
+    setJsonString(newValue);
+    try {
+      const parsedData = JSON.parse(newValue);
+      onUpdate(parsedData);
+      setError(null);
+      // Debounce the save operation
+      const timeoutId = setTimeout(() => saveToFile(newValue), 1000);
+      return () => clearTimeout(timeoutId);
+    } catch (err) {
+      setError('Invalid JSON');
+    }
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg border border-gray-200">
-      <div className="p-4 border-b border-gray-200 flex justify-between items-center">
-        <h2 className="text-lg font-semibold text-gray-900">JSON Editor</h2>
-        <div className="flex items-center space-x-4">
-          <button
-            onClick={() => setIsDarkMode(!isDarkMode)}
-            className="px-3 py-1 text-sm rounded-md bg-gray-100 hover:bg-gray-200 text-gray-700"
-          >
-            {isDarkMode ? 'Light' : 'Dark'} Mode
-          </button>
-          <button
-            onClick={handleReset}
-            className="px-3 py-1 text-sm rounded-md bg-blue-100 hover:bg-blue-200 text-blue-700"
-          >
-            Reset
-          </button>
+    <div className="relative">
+      <div className="mb-2 flex justify-between items-center">
+        <h2 className="text-lg font-semibold text-gray-800">JSON Editor</h2>
+        <div className="text-sm">
+          {saveStatus === 'saving' && <span className="text-blue-600">Saving...</span>}
+          {saveStatus === 'success' && <span className="text-green-600">Saved!</span>}
+          {saveStatus === 'error' && <span className="text-red-600">Save failed</span>}
         </div>
       </div>
-      <div className="h-[800px]">
+      <div className="border rounded-lg overflow-hidden">
         <AceEditor
           mode="json"
-          theme={isDarkMode ? 'monokai' : 'github'}
+          theme="github"
           value={jsonString}
           onChange={handleChange}
           name="json-editor"
@@ -64,16 +81,17 @@ export const JsonEditor: React.FC<JsonEditorProps> = ({ data, onUpdate, onReset 
             showPrintMargin: false,
             showGutter: true,
             highlightActiveLine: true,
-            fontSize: 16,
-            tabSize: 2,
-            useSoftTabs: true,
-            showLineNumbers: true,
-            wrap: true,
+            fontSize: 14,
           }}
           width="100%"
-          height="100%"
+          height="600px"
         />
       </div>
+      {error && (
+        <div className="mt-2 text-sm text-red-600">
+          {error}
+        </div>
+      )}
     </div>
   );
 }; 
